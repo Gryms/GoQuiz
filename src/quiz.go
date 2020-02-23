@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/csv"
+	"flag"
 	"fmt"
 	"io"
 	"os"
@@ -17,10 +18,14 @@ func main() {
 	var input string
 	var good, bad int
 
-	file, err := os.Open("./quiz/problems.csv")
+	path := flag.String("path", "./quiz/problems.csv", "Path to the quiz file you want to use")
+	// timer := flag.Int("timer", 30, "Time in second that you have to answer all the questions from the quiz")
+
+	flag.Parse()
+	file, err := os.Open((*path))
 	check(err)
 	reader := csv.NewReader(file)
-	for {
+	for i := 0; i < 100; i++ {
 		record, err := reader.Read()
 		if err == io.EOF {
 			break
